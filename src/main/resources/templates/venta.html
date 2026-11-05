@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><title>Ventas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Listado de Ventas</h2>
+    <a th:href="@{/vista}" class="btn btn-secondary mb-3">Volver al Menú</a>
+    <a th:href="@{/vista/venta/form}" class="btn btn-success mb-3">+ Nueva Venta</a>
+
+    <div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <table class="table table-striped shadow-sm">
+        <thead class="table-dark">
+        <tr><th>ID</th><th>Fecha</th><th>Cant. Vendida</th><th>Precio</th><th>Comprador</th><th>ID Plantación</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="v : ${venta}">
+            <td th:text="${v.id}"></td>
+            <td th:text="${v.fecha}"></td>
+            <td th:text="${v.cantidadVendida}"></td>
+            <td th:text="${v.precioUnitario}"></td>
+            <td th:text="${v.comprador.nombre}"></td>
+            <td th:text="${v.plantacion.id}"></td>
+            <td>
+                <a th:href="@{/vista/venta/form(id=${v.id})}" class="btn btn-sm btn-primary">Editar</a>
+                <a th:href="@{/vista/venta/eliminar/{id}(id=${v.id})}" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar?')">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+</html>

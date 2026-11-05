@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><title>Formulario Plantación</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <div class="card shadow col-md-8 mx-auto">
+        <div class="card-header bg-primary text-white">
+            <h4 th:text="${plantacion.id == null ? 'Nueva Plantación' : 'Editar Plantación'}"></h4>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/vista/plantacion/guardar}" th:object="${plantacion}" method="post">
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Período</label>
+                        <input type="text" class="form-control" th:field="*{periodo}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">% Lote</label>
+                        <input type="number" step="0.01" class="form-control" th:field="*{porcentajeLote}" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Fecha Plantación</label>
+                        <input type="date" class="form-control" th:field="*{fechaPlantacion}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Fecha Cierre</label>
+                        <input type="date" class="form-control" th:field="*{fechaCierre}">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Cultivo</label>
+                    <select class="form-select" th:field="*{cultivo.codigo}" required>
+                        <option value="">Seleccione un cultivo...</option>
+                        <option th:each="c : ${cultivos}" th:value="${c.codigo}" th:text="${c.descripcion}"></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Lote</label>
+                    <select class="form-select" th:field="*{lote.id}" required>
+                        <option value="">Seleccione un lote...</option>
+                        <option th:each="l : ${lotes}" th:value="${l.id}" th:text="${l.descripcion}"></option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a th:href="@{/vista/plantacion}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

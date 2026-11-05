@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><title>Formulario Cosecha</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <div class="card shadow col-md-6 mx-auto">
+        <div class="card-header bg-primary text-white">
+            <h4 th:text="${cosecha.id == null ? 'Nueva Cosecha' : 'Editar Cosecha'}"></h4>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/vista/cosechas/guardar}" th:object="${cosecha}" method="post">
+                <input type="hidden" th:field="*{id}" />
+                <div class="mb-3">
+                    <label class="form-label">Fecha</label>
+                    <input type="date" class="form-control" th:field="*{fecha}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Rendimiento (Kg)</label>
+                    <input type="number" step="0.01" class="form-control" th:field="*{rendimientokg}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Plantación</label>
+                    <select class="form-select" th:field="*{plantacion.id}" required>
+                        <option value="">Seleccione una plantación...</option>
+                        <option th:each="p : ${plantaciones}" th:value="${p.id}" th:text="${'Plantación N° ' + p.id + ' - ' + p.periodo}"></option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a th:href="@{/vista/cosechas}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
